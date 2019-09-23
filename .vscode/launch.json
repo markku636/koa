@@ -1,0 +1,16 @@
+{
+    // 使用 IntelliSense 瞭解相關屬性。
+    // 懸停以檢視現有屬性的描述。
+    // 欲瞭解更多資訊，請訪問: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    {
+    "type": "node",
+    "request": "attach",
+    "name": "Node: Nodemon",
+    "processId": "${command:PickProcess}",
+    "restart": true,
+    "protocol": "inspector",
+    }
+    ]
+   }
