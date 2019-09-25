@@ -2,6 +2,7 @@ class HomeCtrl{
 
     index(ctx){
         ctx.body= 'this is home';
+        
     }
 
     error(ctx) {        
