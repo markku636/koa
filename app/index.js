@@ -1,8 +1,11 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
 const error  = require('koa-json-error')
+const parameter = require('koa-parameter');
+
 const app = new Koa();
 const routing = require('./routes/main');
+
 
 //// maunal error handle / cannot control 404
 // app.use(async(ctx,next)=>{
@@ -18,11 +21,11 @@ const routing = require('./routes/main');
 // }
 // })
 
+app.use(parameter(app))
+app.use(koaBody())
 app.use(error({
 postFormat:(e,{stack,...reset}) => process.env.NODE_ENV
-
 }))
-app.use(koaBody())
 
 
 routing(app)

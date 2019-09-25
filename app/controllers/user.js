@@ -13,6 +13,11 @@ class UserCtrl {
 
 
     create(ctx) {
+        ctx.verifyParams({
+            name:{type:'string', required:true},
+            age:{type:'number',  required:false}
+        });
+
         ctx.set('Allow', 'GET,POST')
         db.push(ctx.request.body)
 

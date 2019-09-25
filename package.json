@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production nodemon app/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon app/index.js",
-    "debug": "nodemon  --inspect  app/index.js "
+    "debug": "cross-env NODE_ENV=dev nodemon  --inspect  app/index.js "
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
     "koa-json-error": "^3.1.2",
+    "koa-parameter": "^3.0.1",
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
