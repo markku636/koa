@@ -7,13 +7,13 @@ const {find, findById, create, update,delete:del} = require("../controllers/user
 
 const db = [{'name':'ivy'}]  // 內存
 
-router.get('/',)
+router.get('/',find)
 
 router.get('/:id',findById)
 
 router.post('/',create )
 
-router.put('/',update)
+router.put('/:id',update)
 
 router.delete('/:id',del)
 
