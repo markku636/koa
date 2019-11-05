@@ -10,10 +10,18 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    password:{
+        type:String,
+        required:true,
+        select:false // 撈部會撈出來
+    },
     age: {
         type: Number,
-        required: true
-    }
+        required: false
+    },
+    __v:{type:Number, select:false}
+
+
 })
 
 module.exports = model('User',userSchema)

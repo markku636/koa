@@ -19,12 +19,25 @@ class UserCtrl {
                 type: 'string',
                 required: true
             },
+            password: {
+                type: 'string',
+                require: true
+            },
             age: {
                 type: 'number',
                 required: false
             }
         });
+        const {
+            name
+        } = ctx.request.body
 
+        const repeatedUser = await User.findOne({
+            name
+        })
+        if (repeatedUser) {
+            ctx.throw(409,'User 己經存在!')
+        }
         // ctx.set('Allow', 'GET,POST')
         const user = await new User(ctx.request.body).save();
 
@@ -54,7 +67,7 @@ class UserCtrl {
             ctx.throw(404, 'user not found')
         }
         ctx.status = 204
-        ctx.body ='delte success';
+        ctx.body = 'delte success';
     }
 }
 module.exports = new UserCtrl();

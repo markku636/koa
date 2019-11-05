@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
-const error  = require('koa-json-error')
+const error = require('koa-json-error')
 const parameter = require('koa-parameter');
 
 const app = new Koa();
@@ -21,16 +21,23 @@ const config = require('./config.js')
 //   ctx.body ={ message:err.message}
 // }
 // })
-mongoose.connect(config.connectionString,{ useUnifiedTopology: true, useNewUrlParser: true,
-    useFindAndModify:true
-},()=> console.log('mongo connect success'))
-mongoose.connection.on('error',console.error)
+mongoose.connect(config.connectionString, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: true
+}, () => console.log('mongo connect success'))
+mongoose.connection.on('error', console.error)
 
 
 app.use(parameter(app))
 app.use(koaBody())
 app.use(error({
-postFormat:(e,{stack,...reset}) => process.env.NODE_ENV
+    postFormat: (e, {
+            stack,
+            ...reset
+        }) =>
+
+        process.env.NODE_ENV + ":" + e
 }))
 
 
@@ -56,7 +63,7 @@ routing(app)
 // });
 
 var port = 3000
-app.listen(port,()=>{
+app.listen(port, () => {
 
     console.log('程式啟動在' + port + 'port')
 })
