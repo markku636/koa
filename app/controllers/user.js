@@ -95,7 +95,7 @@ class UserCtrl {
         } = user;
 
         const token = jwt.sign({_id, name}, config.secret,{expiresIn:'1d'});
-        ctx.body = token;
+        ctx.body = {token};
     }
 }
 module.exports = new UserCtrl();

@@ -2,6 +2,8 @@ const Router = require('koa-router')
 const router = new Router({
     prefix: '/users'
 });
+const jwt = require('jsonwebtoken')
+const config = require("../config")
 
 const {
     find,
@@ -12,21 +14,25 @@ const {
     login
 } = require("../controllers/user")
 
+const auth = async (ctx,next) => {
+    console.log(ctx)
+    const {
+        authorization = ''
+    } = ctx.request.header;
+    const token = authorization.replace("Bearer ", "")
+    try {
+        const user = jwt.verify(token, config.secret)
+        ctx.state.user = user;
+    } catch (err) {
+        ctx.throw(401, err.message)
+    }
+    await next();
+}
 
-
-const db = [{
-    'name': 'ivy'
-}] // 內存
-
-router.get('/', find)
-
-router.get('/:id', findById)
-
-router.post('/', create)
+router.get('/', auth, find)
+router.get('/:id', auth, findById)
+router.post('/', auth, create)
 router.post('/login', login)
-
-router.put('/:id', update)
-
-router.delete('/:id', del)
-
+router.put('/:id', auth, update)
+router.delete('/:id', auth, del)
 module.exports = router;
