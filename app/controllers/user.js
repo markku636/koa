@@ -1,5 +1,6 @@
 const User = require("../models/user")
-
+const jwt = require('jsonwebtoken')
+const config = require("../config")
 class UserCtrl {
     async find(ctx) {
         ctx.body = await User.find();
@@ -36,7 +37,7 @@ class UserCtrl {
             name
         })
         if (repeatedUser) {
-            ctx.throw(409,'User 己經存在!')
+            ctx.throw(409, 'User 己經存在!')
         }
         // ctx.set('Allow', 'GET,POST')
         const user = await new User(ctx.request.body).save();
@@ -68,6 +69,33 @@ class UserCtrl {
         }
         ctx.status = 204
         ctx.body = 'delte success';
+    }
+
+    async login(ctx) {
+        ctx.verifyParams({
+            name: {
+                type: 'string',
+                required: true
+            },
+            password: {
+                type: 'string',
+                require: true
+            }
+        });
+
+        const user = await User.findOne(ctx.request.body)
+
+        if (!user) {
+            ctx.throw(401, '用戶名不存在!')
+        }
+
+        const {
+            _id,
+            name
+        } = user;
+
+        const token = jwt.sign({_id, name}, config.secret,{expiresIn:'1d'});
+        ctx.body = token;
     }
 }
 module.exports = new UserCtrl();

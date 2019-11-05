@@ -20,8 +20,6 @@ const userSchema = new Schema({
         required: false
     },
     __v:{type:Number, select:false}
-
-
 })
 
 module.exports = model('User',userSchema)
