@@ -1,3 +1,5 @@
+const path = require('path');
+
 class HomeCtrl {
 
     index(ctx) {
@@ -6,8 +8,10 @@ class HomeCtrl {
 
     upload(ctx) {
         const file = ctx.request.files.file;
+        const baseName = path.basename(file.path)
+
         ctx.body = {
-            path: file.path
+            url: `${ctx.origin}/uploads/${baseName}`
         };
     }
 

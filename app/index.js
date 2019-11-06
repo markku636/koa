@@ -8,6 +8,7 @@ const routing = require('./routes/main');
 const mongoose = require('mongoose');
 const config = require('./config.js');
 const path = require('path');
+const static = require('koa-static');
 
 //// maunal error handle / cannot control 404
 // app.use(async(ctx,next)=>{
@@ -30,7 +31,13 @@ mongoose.connect(config.connectionString, {
 mongoose.connection.on('error', console.error)
 
 
-app.use(parameter(app))
+
+const staticPath = 'public'
+
+app.use(static(
+  path.join( __dirname,  staticPath)
+))
+app.use(parameter(app));
 app.use(koaBody({
         multipart: true,
         formidable: {
