@@ -3,6 +3,8 @@ const router = new Router({
     prefix: '/users'
 });
 const jwt = require('jsonwebtoken')
+const koaJwt = require('koa-jwt')
+
 const config = require("../config")
 
 const {
@@ -14,7 +16,10 @@ const {
     login
 } = require("../controllers/user")
 
-const auth = async (ctx,next) => {
+// const auth = koaJwt({"secret":config.secret})
+
+// 土法練鋼
+const auth = async (ctx, next) => {
     console.log(ctx)
     const {
         authorization = ''
