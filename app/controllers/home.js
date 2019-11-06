@@ -1,10 +1,17 @@
-class HomeCtrl{
+class HomeCtrl {
 
-    index(ctx){
-        ctx.body= 'this is home';        
+    index(ctx) {
+        ctx.body = 'this is home';
     }
 
-    error(ctx) {        
+    upload(ctx) {
+        const file = ctx.request.files.file;
+        ctx.body = {
+            path: file.path
+        };
+    }
+
+    error(ctx) {
         ctx.throw(401);
     }
 }

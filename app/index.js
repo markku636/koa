@@ -5,8 +5,9 @@ const parameter = require('koa-parameter');
 
 const app = new Koa();
 const routing = require('./routes/main');
-const mongoose = require('mongoose')
-const config = require('./config.js')
+const mongoose = require('mongoose');
+const config = require('./config.js');
+const path = require('path');
 
 //// maunal error handle / cannot control 404
 // app.use(async(ctx,next)=>{
@@ -30,7 +31,15 @@ mongoose.connection.on('error', console.error)
 
 
 app.use(parameter(app))
-app.use(koaBody())
+app.use(koaBody({
+        multipart: true,
+        formidable: {
+            uploadDir: path.join(__dirname, "public/uploads"),
+            keepExtensions:true
+        }
+
+    } // upload file
+))
 app.use(error({
     postFormat: (e, {
             stack,
