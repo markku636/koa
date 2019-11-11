@@ -50,7 +50,47 @@ class UserCtrl {
             name: {
                 type: 'string',
                 require: true
-            }
+            },
+            password: {
+                type: 'string',
+                require: false
+            },
+            age: {
+                type: 'number',
+                required: false
+            },
+            gender:{
+                type:'string'
+            },
+            avatar_url: {
+                type: 'string',
+                required: false
+            },
+      
+            headine: {
+                type: 'string',
+                required: false
+            },
+            business:{
+                type: 'string',
+                required: false
+            },
+            localtions:{
+                type: 'array',
+                required: false,
+                itemType:'string' // 型別必須是對的                
+            },
+            employments: {
+                type: 'array',
+                required: false,
+                itemType:'object'                
+            },
+            educations: {
+                type: 'array',
+                required: false,
+                itemType:'object'                
+            },
+            
         });
 
         const user = await User.findByIdAndUpdate(ctx.params.id, ctx.request.body)
@@ -94,8 +134,15 @@ class UserCtrl {
             name
         } = user;
 
-        const token = jwt.sign({_id, name}, config.secret,{expiresIn:'1d'});
-        ctx.body = {token};
+        const token = jwt.sign({
+            _id,
+            name
+        }, config.secret, {
+            expiresIn: '1d'
+        });
+        ctx.body = {
+            token
+        };
     }
 }
 module.exports = new UserCtrl();
